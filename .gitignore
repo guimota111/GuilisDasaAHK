@@ -1,0 +1,12 @@
+# Backups gerados automaticamente
+*.bak
+
+# Compilados AutoHotkey
+*.exe
+
+# Configuração local do Claude Code
+.claude/
+
+# Arquivos de sistema Windows
+Thumbs.db
+desktop.ini

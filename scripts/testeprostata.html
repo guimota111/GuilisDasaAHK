@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUILIS — Prostatectomia 2.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4 font-sans text-sm">
+<div class="max-w-6xl mx-auto">
+
+    <header class="mb-4 flex items-baseline gap-3">
+        <h1 class="text-xl font-bold text-gray-800">Prostatectomia — Peça Cirúrgica</h1>
+        <span class="text-xs text-gray-400">Versão 2.0 · Médias Ponderadas por Cassete</span>
+    </header>
+
+    <div class="flex gap-4 items-start">
+
+        <!-- ====== COLUNA ESQUERDA ====== -->
+        <div class="flex-1 space-y-4">
+
+            <!-- Tabela de Cassetes -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-2 bg-gray-50 border-b flex justify-between items-center">
+                    <div>
+                        <h2 class="font-bold text-gray-700">Dados por Cassete</h2>
+                        <p class="text-xs text-gray-400">Tumor%, G4% e G5% por cassete · Enter ou Tab avança campo</p>
+                    </div>
+                    <button onclick="limparTudo()"
+                        class="text-xs text-red-400 hover:text-red-600 border border-red-200 hover:border-red-400 rounded px-2 py-1 transition">
+                        Limpar tudo
+                    </button>
+                </div>
+                <div class="overflow-y-auto" style="max-height:520px">
+                    <table class="w-full text-xs border-collapse">
+                        <thead class="sticky top-0 z-10">
+                            <tr class="bg-gray-100 border-b text-gray-500 uppercase tracking-wide">
+                                <th class="px-2 py-2 text-center w-8">#</th>
+                                <th class="px-2 py-2 text-left">Região</th>
+                                <th class="px-1 py-2 text-center w-20">Tumor %</th>
+                                <th class="px-1 py-2 text-center w-20">G4 %</th>
+                                <th class="px-1 py-2 text-center w-20">G5 %</th>
+                                <th class="px-1 py-2 text-center w-8"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaCassetes"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Margens Cirúrgicas -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-2 bg-gray-50 border-b">
+                    <h2 class="font-bold text-gray-700">Margens Cirúrgicas</h2>
+                    <p class="text-xs text-gray-400">Preencha Gleason e cassete apenas quando comprometida</p>
+                </div>
+                <table class="w-full text-xs">
+                    <thead>
+                        <tr class="bg-gray-100 border-b text-gray-500 uppercase tracking-wide">
+                            <th class="px-3 py-2 text-left w-36">Margem</th>
+                            <th class="px-1 py-2 text-left">Status</th>
+                            <th class="px-1 py-2 text-center w-14">G prim</th>
+                            <th class="px-1 py-2 text-center w-14">G sec</th>
+                            <th class="px-1 py-2 text-center w-16">Cassete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaMargens"></tbody>
+                </table>
+            </div>
+
+            <!-- Extensão Extraprostática -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-2 bg-gray-50 border-b">
+                    <h2 class="font-bold text-gray-700">Extensão Extraprostática (EPE)</h2>
+                    <p class="text-xs text-gray-400">Preencha Gleason e cassete apenas quando presente</p>
+                </div>
+                <table class="w-full text-xs">
+                    <thead>
+                        <tr class="bg-gray-100 border-b text-gray-500 uppercase tracking-wide">
+                            <th class="px-3 py-2 text-left w-36">Localização</th>
+                            <th class="px-1 py-2 text-left">Status</th>
+                            <th class="px-1 py-2 text-center w-14">G prim</th>
+                            <th class="px-1 py-2 text-center w-14">G sec</th>
+                            <th class="px-1 py-2 text-center w-16">Cassete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaEPE"></tbody>
+                </table>
+            </div>
+
+        </div><!-- fim coluna esquerda -->
+
+        <!-- ====== COLUNA DIREITA ====== -->
+        <div class="w-64 space-y-3 shrink-0">
+
+            <!-- Resultados -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <h3 class="font-bold text-blue-800 text-xs uppercase mb-2">Resultados</h3>
+                <div class="space-y-1">
+                    <div class="bg-white rounded border p-2 text-center">
+                        <span class="block text-xs text-gray-400 uppercase">Volume</span>
+                        <span id="resVol" class="text-2xl font-bold text-blue-700">0%</span>
+                    </div>
+                    <div class="bg-white rounded border p-2 text-center">
+                        <span class="block text-xs text-gray-400 uppercase">Gleason</span>
+                        <span id="resGleason" class="text-2xl font-bold text-red-600">—</span>
+                    </div>
+                    <div class="bg-white rounded border p-2 flex justify-around text-center">
+                        <div>
+                            <span class="block text-xs text-gray-400">G4</span>
+                            <span id="resMG4" class="font-bold text-orange-600">0%</span>
+                        </div>
+                        <div class="border-l"></div>
+                        <div>
+                            <span class="block text-xs text-gray-400">G5</span>
+                            <span id="resMG5" class="font-bold text-red-700">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invasões -->
+            <div class="bg-white rounded-lg border border-gray-200 p-3 space-y-2">
+                <h3 class="font-bold text-gray-600 text-xs uppercase border-b pb-1">Invasões</h3>
+                <div>
+                    <label class="text-xs text-gray-500">Carcinoma intraductal</label>
+                    <select id="intraductal" onchange="calcular()"
+                        class="mt-1 w-full border rounded p-1 text-xs focus:ring-1 focus:ring-blue-400">
+                        <option>não detectado</option>
+                        <option>presente</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Vascular sanguínea</label>
+                    <select id="vascS" onchange="calcular()"
+                        class="mt-1 w-full border rounded p-1 text-xs focus:ring-1 focus:ring-blue-400">
+                        <option>não detectada</option>
+                        <option>presente</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Vascular linfática</label>
+                    <select id="vascL" onchange="calcular()"
+                        class="mt-1 w-full border rounded p-1 text-xs focus:ring-1 focus:ring-blue-400">
+                        <option>não detectada</option>
+                        <option>presente</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Perineural</label>
+                    <select id="peri" onchange="calcular()"
+                        class="mt-1 w-full border rounded p-1 text-xs focus:ring-1 focus:ring-blue-400">
+                        <option>presente</option>
+                        <option>não detectada</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Extensão extraprostática</label>
+                    <select id="epe" onchange="calcular()"
+                        class="mt-1 w-full border rounded p-1 text-xs focus:ring-1 focus:ring-blue-400">
+                        <option>não detectada</option>
+                        <option>presente</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tecido Adjacente -->
+            <div class="bg-white rounded-lg border border-gray-200 p-3">
+    <h3 class="font-bold text-gray-600 text-xs uppercase border-b pb-1 mb-2">Tecido Adjacente</h3>
+    <div class="space-y-1 text-xs">
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="chkPin" onchange="calcular()"> PIN de alto grau
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="chkHnp" onchange="calcular()" checked> Hiperplasia nodular
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="chkInf" onchange="calcular()" checked> Inflamação crônica
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="chkAtr" onchange="calcular()" checked> Atrofia acinar
+        </label>
+    </div>
+</div>
+
+            <!-- Prévia -->
+            <div class="bg-white rounded-lg border border-gray-200 p-3">
+                <h3 class="font-bold text-gray-600 text-xs uppercase mb-2">Prévia do Laudo</h3>
+                <textarea id="laudoFinal" rows="16" readonly
+                    class="w-full bg-gray-900 text-green-400 font-mono text-xs p-2 rounded leading-relaxed resize-none"></textarea>
+                <button id="btnCopiar" onclick="copiarLaudo()"
+                    class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition text-xs">
+                    Copiar Laudo
+                </button>
+            </div>
+
+        </div><!-- fim coluna direita -->
+    </div>
+</div>
+
+<script>
+// =============================================================
+// CONSTANTES
+// =============================================================
+const TOTAL = 34;
+
+const GRUPOS = [
+    { inicio:  1, fim:  8, label: "Porção Anterior — Lobo Direito",   rowCor: "bg-green-50",  headerCor: "bg-green-200 text-green-900"  },
+    { inicio:  9, fim: 16, label: "Porção Posterior — Lobo Direito",  rowCor: "bg-green-50",  headerCor: "bg-green-200 text-green-900"  },
+    { inicio: 17, fim: 24, label: "Porção Anterior — Lobo Esquerdo",  rowCor: "bg-yellow-50", headerCor: "bg-yellow-200 text-yellow-900"},
+    { inicio: 25, fim: 32, label: "Porção Posterior — Lobo Esquerdo", rowCor: "bg-yellow-50", headerCor: "bg-yellow-200 text-yellow-900"},
+    { inicio: 33, fim: 33, label: "Ápice",                            rowCor: "bg-purple-50", headerCor: "bg-purple-200 text-purple-900"},
+    { inicio: 34, fim: 34, label: "Base",                             rowCor: "bg-gray-50",   headerCor: "bg-gray-200 text-gray-700"   },
+];
+
+const MARGENS = [
+    { id: 'radial',  label: 'Radial'       },
+    { id: 'apical',  label: 'Apical'       },
+    { id: 'bexiga',  label: 'Da bexiga'    },
+    { id: 'anterior',label: 'Anterior'     },
+];
+
+const EPE_LOCAIS = [
+    { id: 'epe_antdir',  label: 'Ant. Direita'    },
+    { id: 'epe_postdir', label: 'Post. Direita'   },
+    { id: 'epe_antesq',  label: 'Ant. Esquerda'   },
+    { id: 'epe_postesq', label: 'Post. Esquerda'  },
+    { id: 'epe_apice',   label: 'Ápice'           },
+    { id: 'epe_base',    label: 'Base'            },
+];
+
+// =============================================================
+// MONTA TABELA DE CASSETES
+// =============================================================
+const rowColors = {};
+const groupStarts = {};
+GRUPOS.forEach(g => {
+    groupStarts[g.inicio] = g;
+    for (let n = g.inicio; n <= g.fim; n++) rowColors[n] = g.rowCor;
+});
+
+function getRegiaoCurta(n) {
+    if (n <= 8)  return "Ant. Direito";
+    if (n <= 16) return "Post. Direito";
+    if (n <= 24) return "Ant. Esquerdo";
+    if (n <= 32) return "Post. Esquerdo";
+    return n === 33 ? "Ápice" : "Base";
+}
+
+const tbody = document.getElementById('tabelaCassetes');
+for (let n = 1; n <= TOTAL; n++) {
+    if (groupStarts[n]) {
+        const g = groupStarts[n];
+        const hr = document.createElement('tr');
+        hr.innerHTML = `<td colspan="6" class="px-3 py-1 text-xs font-semibold ${g.headerCor}">${g.label}</td>`;
+        tbody.appendChild(hr);
+    }
+    const tr = document.createElement('tr');
+    tr.id = `row-${n}`;
+    tr.className = `${rowColors[n]} border-b border-gray-100`;
+    tr.innerHTML = `
+        <td class="px-2 py-1 text-center font-bold text-gray-500 select-none">${n}</td>
+        <td class="px-2 py-1 text-gray-400 select-none">${getRegiaoCurta(n)}</td>
+        <td class="px-1 py-1">
+            <input type="number" min="0" max="100" step="1" placeholder="—"
+                id="t${n}" oninput="calcular()" onkeydown="nav(event,${n},'t')"
+                class="w-full border border-gray-200 rounded px-1 py-0.5 text-center text-xs focus:ring-1 focus:ring-blue-400 bg-white">
+        </td>
+        <td class="px-1 py-1">
+            <input type="number" min="0" max="100" step="1" placeholder="—"
+                id="g4-${n}" oninput="calcular()" onkeydown="nav(event,${n},'g4')"
+                class="w-full border border-gray-200 rounded px-1 py-0.5 text-center text-xs focus:ring-1 focus:ring-blue-400 bg-white">
+        </td>
+        <td class="px-1 py-1">
+            <input type="number" min="0" max="100" step="1" placeholder="—"
+                id="g5-${n}" oninput="calcular()" onkeydown="nav(event,${n},'g5')"
+                class="w-full border border-gray-200 rounded px-1 py-0.5 text-center text-xs focus:ring-1 focus:ring-blue-400 bg-white">
+        </td>
+        <td class="px-1 py-1 text-center w-8 text-base" id="ok-${n}"></td>`;
+    tbody.appendChild(tr);
+}
+
+// =============================================================
+// MONTA TABELA DE MARGENS
+// =============================================================
+const tbodyM = document.getElementById('tabelaMargens');
+MARGENS.forEach(m => {
+    const tr = document.createElement('tr');
+    tr.className = 'border-b';
+    tr.innerHTML = linhaSecundaria(m.id, m.label, false);
+    tbodyM.appendChild(tr);
+});
+
+// =============================================================
+// MONTA TABELA DE EPE
+// =============================================================
+const tbodyE = document.getElementById('tabelaEPE');
+EPE_LOCAIS.forEach(e => {
+    const tr = document.createElement('tr');
+    tr.className = 'border-b';
+    tr.innerHTML = linhaSecundaria(e.id, e.label, true);
+    tbodyE.appendChild(tr);
+});
+
+function linhaSecundaria(id, label, isEPE) {
+    const opt = isEPE
+        ? ['ausente', 'presente focal', 'presente extenso']
+        : ['não comprometida', 'focal (<3 mm)', 'extenso (≥3 mm)'];
+    return `
+        <td class="px-3 py-1 font-medium text-gray-600">${label}</td>
+        <td class="px-1 py-1">
+            <select id="ss-${id}" onchange="updateSec('${id}');calcular()"
+                class="w-full border rounded px-1 py-0.5 text-xs">
+                ${opt.map(o => `<option>${o}</option>`).join('')}
+            </select>
+        </td>
+        <td class="px-1 py-1">
+            <input type="number" min="3" max="5" id="sp-${id}" placeholder="—" disabled
+                oninput="calcular()"
+                class="w-full border rounded px-1 py-0.5 text-center text-xs disabled:bg-gray-50 disabled:text-gray-300 focus:ring-1 focus:ring-blue-400">
+        </td>
+        <td class="px-1 py-1">
+            <input type="number" min="3" max="5" id="sg-${id}" placeholder="—" disabled
+                oninput="calcular()"
+                class="w-full border rounded px-1 py-0.5 text-center text-xs disabled:bg-gray-50 disabled:text-gray-300 focus:ring-1 focus:ring-blue-400">
+        </td>
+        <td class="px-1 py-1">
+            <input type="number" min="1" max="34" id="sc-${id}" placeholder="—" disabled
+                oninput="calcular()"
+                class="w-full border rounded px-1 py-0.5 text-center text-xs disabled:bg-gray-50 disabled:text-gray-300 focus:ring-1 focus:ring-blue-400">
+        </td>`;
+}
+
+function updateSec(id) {
+    const status = document.getElementById(`ss-${id}`).value;
+    const ativo = status !== 'não comprometida' && status !== 'ausente';
+    ['sp-', 'sg-', 'sc-'].forEach(p => {
+        const el = document.getElementById(p + id);
+        el.disabled = !ativo;
+        if (!ativo) el.value = '';
+    });
+}
+
+// =============================================================
+// NAVEGAÇÃO TECLADO NA TABELA DE CASSETES
+// =============================================================
+function nav(e, n, field) {
+    if (e.key !== 'Enter' && e.key !== 'Tab') return;
+    e.preventDefault();
+    if      (field === 't')  document.getElementById(`g4-${n}`)?.focus();
+    else if (field === 'g4') document.getElementById(`g5-${n}`)?.focus();
+    else if (field === 'g5') document.getElementById(`t${n < TOTAL ? n+1 : 1}`)?.focus();
+}
+
+// =============================================================
+// UTILITÁRIOS
+// =============================================================
+function getVal(id) {
+    const v = parseFloat(document.getElementById(id)?.value);
+    return isNaN(v) ? 0 : v;
+}
+
+function gradeGroup(p, s) {
+    const t = p + s;
+    if (t <= 6)              return 1;
+    if (t === 7 && p === 3)  return 2;
+    if (t === 7 && p === 4)  return 3;
+    if (t === 8)             return 4;
+    return 5;
+}
+
+function gleasonTexto(p, s) {
+    if (!p || !s || p < 3 || s < 3) return null;
+    return `Gleason ${p}+${s}=${p+s}, grau grupo ${gradeGroup(p,s)} (ISUP/OMS)`;
+}
+
+function calcGleason(p3, p4, p5) {
+    const comp = [{g:3,p:p3},{g:4,p:p4},{g:5,p:p5}];
+    comp.sort((a,b) => b.p - a.p || b.g - a.g);
+    return { prim: comp[0].g, sec: comp[1].p > 0 ? comp[1].g : comp[0].g };
+}
+
+// =============================================================
+// CÁLCULO PRINCIPAL
+// =============================================================
+function calcular() {
+    let somaTumor = 0, somaG4 = 0, somaG5 = 0;
+    const locais = new Set();
+
+    for (let n = 1; n <= TOTAL; n++) {
+        const pT  = getVal(`t${n}`);
+        const pG4 = getVal(`g4-${n}`);
+        const pG5 = getVal(`g5-${n}`);
+        const okEl = document.getElementById(`ok-${n}`);
+
+        if (pT > 0) {
+            const valido = (pG4 + pG5) <= pT + 0.01;
+            okEl.textContent = valido ? '✓' : '⚠';
+            okEl.className = valido ? 'text-green-500 font-bold' : 'text-red-500 font-bold';
+            somaTumor += pT;
+            somaG4    += pG4 * pT;
+            somaG5    += pG5 * pT;
+            if      (n <= 8)  locais.add("porção anterior do lobo médio direito");
+            else if (n <= 16) locais.add("porção posterior do lobo médio direito");
+            else if (n <= 24) locais.add("porção anterior do lobo médio esquerdo");
+            else if (n <= 32) locais.add("porção posterior do lobo médio esquerdo");
+            else if (n === 33){ locais.add("ápice direito"); locais.add("ápice esquerdo"); }
+            else if (n === 34){ locais.add("base direita");  locais.add("base esquerda");  }
+        } else {
+            okEl.textContent = '';
+        }
+    }
+
+    const vol = somaTumor / TOTAL;
+    const mG4 = somaTumor > 0 ? somaG4 / somaTumor : 0;
+    const mG5 = somaTumor > 0 ? somaG5 / somaTumor : 0;
+    const mG3 = 100 - mG4 - mG5;
+
+    document.getElementById('resVol').textContent  = vol.toFixed(1) + '%';
+    document.getElementById('resMG4').textContent  = mG4.toFixed(1) + '%';
+    document.getElementById('resMG5').textContent  = mG5.toFixed(1) + '%';
+
+    if (somaTumor > 0) {
+        const {prim, sec} = calcGleason(mG3, mG4, mG5);
+        document.getElementById('resGleason').textContent = `${prim}+${sec}=${prim+sec}`;
+    } else {
+        document.getElementById('resGleason').textContent = '—';
+    }
+
+    gerarLaudo(vol, mG3, mG4, mG5, Array.from(locais));
+}
+
+// =============================================================
+// GERAÇÃO DO LAUDO
+// =============================================================
+function gerarLaudo(vol, p3, p4, p5, locais) {
+    if (vol === 0 && !temAlteracaoSecundaria()) {
+        document.getElementById('laudoFinal').value = '';
+        return;
+    }
+
+    let res = '';
+
+    // --- 1. Tumor ---
+    if (vol > 0) {
+        const {prim, sec} = calcGleason(p3, p4, p5);
+        const strLoc = locais.join(', ').replace(/, ([^,]*)$/, ' e $1') || '[]';
+        res += `1. PRODUTO DE PROSTATECTOMIA RADICAL:\n`;
+        res += `Adenocarcinoma acinar usual\n`;
+        res += `. Graduação histológica: Gleason ${prim}+${sec}=${prim+sec}, grau grupo ${gradeGroup(prim,sec)} (ISUP/OMS)\n`;
+        res += `  - Porcentagem de Gleason 4: ${p4.toFixed(1)}%\n`;
+        res += `  - Porcentagem de Gleason 5: ${p5.toFixed(1)}%\n`;
+        res += `. Carcinoma intraductal: ${document.getElementById('intraductal').value}\n`;
+        res += `. Localização: ${strLoc}\n`;
+        res += `. Volume da neoplasia: ${vol.toFixed(1)}% do órgão acometido\n`;
+        res += `. Invasão vascular sanguínea: ${document.getElementById('vascS').value}\n`;
+        res += `. Invasão vascular linfática: ${document.getElementById('vascL').value}\n`;
+        res += `. Invasão perineural: ${document.getElementById('peri').value}\n`;
+        res += `. Extensão extraprostática: ${document.getElementById('epe').value}\n`;
+        
+
+        const adj = [];
+        if (document.getElementById('chkPin').checked) adj.push('Neoplasia intraepitelial prostática (PIN) de alto grau');
+        if (document.getElementById('chkHnp').checked) adj.push('Hiperplasia nodular');
+        if (document.getElementById('chkInf').checked) adj.push('Processo inflamatório crônico');
+        if (document.getElementById('chkAtr').checked) adj.push('Atrofia acinar');
+        if (adj.length) {
+            res += `\nTecido prostático adjacente à neoplasia:\n`;
+            adj.forEach(a => res += `. ${a}\n`);
+        }
+        res += '\n';
+    }
+
+    // --- 2. Margens ---
+    const linhasMargens = gerarLinhasSecundarias(MARGENS, false);
+    if (linhasMargens) {
+        res += `2. MARGENS CIRÚRGICAS:\n${linhasMargens}\n`;
+    }
+
+    // --- 3. EPE ---
+    const linhasEPE = gerarLinhasSecundarias(EPE_LOCAIS, true);
+    if (linhasEPE) {
+        res += `3. EXTENSÃO EXTRAPROSTÁTICA:\n${linhasEPE}\n`;
+    }
+
+    document.getElementById('laudoFinal').value = res.trimEnd();
+}
+
+function gerarLinhasSecundarias(lista, isEPE) {
+    let out = '';
+    lista.forEach(item => {
+        const status = document.getElementById(`ss-${item.id}`)?.value;
+        if (!status) return;
+
+        const ativo  = status !== 'não comprometida' && status !== 'ausente';
+        const gp     = getVal(`sp-${item.id}`);
+        const gs     = getVal(`sg-${item.id}`);
+        const cass   = getVal(`sc-${item.id}`);
+        const cassStr = cass > 0 ? ` (cassete ${cass})` : '';
+
+        if (!ativo) {
+            out += `. ${item.label}: ${isEPE ? 'ausente' : 'não comprometida'}.\n`;
+        } else {
+            const gt = gleasonTexto(gp, gs);
+            if (isEPE) {
+                const desc = status === 'presente focal' ? 'presente, focal' : 'presente, extensa';
+                out += `. ${item.label}${cassStr}: ${desc}`;
+                if (gt) out += `, ${gt}`;
+                out += '.\n';
+            } else {
+                const desc = status === 'focal (<3 mm)'
+                    ? 'comprometida focalmente (<3,0 mm)'
+                    : 'comprometida extensamente (≥3,0 mm)';
+                out += `. Margem ${item.label.toLowerCase()}${cassStr}: ${desc}`;
+                if (gt) out += ` por adenocarcinoma ${gt}`;
+                out += '.\n';
+            }
+        }
+    });
+    return out;
+}
+
+function temAlteracaoSecundaria() {
+    const todos = [...MARGENS, ...EPE_LOCAIS];
+    return todos.some(item => {
+        const s = document.getElementById(`ss-${item.id}`)?.value;
+        return s && s !== 'não comprometida' && s !== 'ausente';
+    });
+}
+
+// =============================================================
+// AÇÕES
+// =============================================================
+function copiarLaudo() {
+    const texto = document.getElementById('laudoFinal').value;
+    if (!texto) return;
+    navigator.clipboard.writeText(texto).then(() => {
+        const btn = document.getElementById('btnCopiar');
+        btn.textContent = '✓ Copiado!';
+        btn.classList.replace('bg-blue-600','bg-green-600');
+        btn.classList.replace('hover:bg-blue-700','hover:bg-green-700');
+        setTimeout(() => {
+            btn.textContent = 'Copiar Laudo';
+            btn.classList.replace('bg-green-600','bg-blue-600');
+            btn.classList.replace('hover:bg-green-700','hover:bg-blue-700');
+        }, 2000);
+    });
+}
+
+function limparTudo() {
+    for (let n = 1; n <= TOTAL; n++) {
+        ['t','g4-','g5-'].forEach(p => { const el = document.getElementById(p+n); if(el) el.value=''; });
+        const ok = document.getElementById(`ok-${n}`);
+        if (ok) ok.textContent = '';
+    }
+    document.getElementById('intraductal').selectedIndex = 0;
+    [...MARGENS, ...EPE_LOCAIS].forEach(item => {
+        const ss = document.getElementById(`ss-${item.id}`);
+        if (ss) { ss.selectedIndex = 0; updateSec(item.id); }
+    });
+    calcular();
+}
+</script>
+</body>
+</html>
