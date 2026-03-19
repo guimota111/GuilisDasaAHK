@@ -3,22 +3,20 @@
 PasteInto(hwnd, txt) {
     try WinActivate("ahk_id " hwnd)
     try WinWaitActive("ahk_id " hwnd, , 1)
-
-    old := A_Clipboard
-    A_Clipboard := txt
-    ClipWait 0.5
-    Send "^v"
-    Sleep 50
-    A_Clipboard := old
+    SendText txt
 }
 
 InsertText(txt) {
-    old := A_Clipboard
-    A_Clipboard := txt
-    ClipWait 1
-    Send "^v"
-    Sleep 300
-    A_Clipboard := old
+    SendText txt
+}
+
+; Envia a linha do H. pylori com o nome em itálico
+SendLinhaHP(resultado) {
+    SendText "`n. A pesquisa de "
+    Send "^i"
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou " resultado "."
 }
 
 AplicarIcone(guiObj, nomeDoIcone := "IconeMascaras.ico") {

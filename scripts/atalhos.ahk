@@ -1,112 +1,206 @@
-﻿; --- Atalhos de Gastrite (Com Quebra de Linha) ---
-:*:gclsemnadaa:: {
-    InserirTextoRapido("Gastrite crônica leve em mucosa de padrão antral.`n. Atividade ausente`n. Atrofia ausente`n. Metaplasia intestinal ausente`n. Pesquisa de H. pylori (coloração especial Giemsa): negativa")
-}
+; scripts\atalhos.ahk
 
-:*:gclsemnadaf:: {
-    InserirTextoRapido("Gastrite crônica leve em mucosa de padrão fúndico.`n. Atividade ausente`n. Atrofia ausente`n. Metaplasia intestinal ausente`n. Pesquisa de H. pylori (coloração especial Giemsa): negativa")
-}
-
-:*:pangcl:: {
-    InserirTextoRapido("Pangastrite crônica leve.`n. Atividade ausente`n. Atrofia ausente`n. Metaplasia intestinal ausente`n. Pesquisa de H. pylori (coloração especial Giemsa): negativa")
-}
-
-:*:gclatvla:: {
-    InserirTextoRapido("Gastrite crônica leve em mucosa de padrão antral.`n. Atividade leve`n. Atrofia ausente`n. Metaplasia intestinal ausente`n. Pesquisa de H. pylori (coloração especial Giemsa): negativa")
-}
-
-:*:gclatvlf:: {
-    InserirTextoRapido("Gastrite crônica leve em mucosa de padrão fúndica.`n. Atividade leve`n. Atrofia ausente`n. Metaplasia intestinal ausente`n. Pesquisa de H. pylori (coloração especial Giemsa): negativa")
-}
-:*:dcil:: {
-    InserirTextoRapido("Duodenite crônica inespecífica (duodenite péptica) leve`n. Ausência de atrofia, granulomas e parasitas`n. Relação vilosidade:cripta 3:1, dentro dos limites histológicos da normalidade")
-}
-
-:*:datahoje:: {
-    DataAtual := FormatTime(, "dd/MM/yyyy")
-    SendText(DataAtual)
-}
-
-; Função para inserir textos longos via Colagem (Ctrl+V) sem perder o Clipboard original
+; Função para inserir texto digitando (sem área de transferência)
 InserirTextoRapido(texto) {
-    oldClip := A_Clipboard    ; Salva o que você já tinha copiado
-    A_Clipboard := texto      ; Coloca o laudo no clipboard
-    ClipWait(1)               ; Aguarda até 1s o Windows confirmar a atualização
-    Send("^v")                ; Cola
-
-    ; Devolve o seu conteúdo original pro Ctrl+V depois de 1 segundo
-    SetTimer(() => (A_Clipboard := oldClip), -1000)
+    SendText texto
 }
 
+; Insere uma linha em negrito seguida de texto normal
+InserirBoldResto(bold, resto) {
+    Send "^b"
+    SendText bold
+    Send "^b"
+    SendText resto
+}
 
+; =========================================================
+; ATALHOS DE DATA
+; =========================================================
+:*:datahoje:: {
+    SendText FormatTime(, "dd/MM/yyyy")
+}
 
-
-
-
+; =========================================================
+; ATALHOS GERAIS
+; =========================================================
 :*:dlhn:: {
-    InserirTextoRapido("dentro dos limites histológicos da normalidade")
+    SendText "dentro dos limites histológicos da normalidade"
 }
-
-
-
-
-
-
-
-:*:pelemglivre:: {
-    InserirTextoRapido("2. MARGENS PERIFÉRICAS:`nLivres de neoplasia`n`n3. MARGEM PROFUNDA: `nLivre de neoplasia")
-}
-
-
-
-:*:cccl:: {
-    InserirTextoRapido("Colecistite crônica`nColelitíase")
-}
-
-
-
-:*:_separator:: {
-    InserirTextoRapido("------------------------------------------------------")
-}
-
-
 
 :*:mg0:: {
-    InserirTextoRapido("Livre de neoplasia")
+    SendText "Livre de neoplasia"
 }
-
-
 
 :*:mgdlhn:: {
-    InserirTextoRapido("Livre de neoplasia, dentro dos limites histológicos da normalidade")
+    SendText "Livre de neoplasia, dentro dos limites histológicos da normalidade"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 :*:compneo:: {
-    InserirTextoRapido("Comprometida pela neoplasia")
+    SendText "Comprometida pela neoplasia"
 }
-
-
 
 :*:hpn:: {
-    InserirTextoRapido("`n. Pesquisa de H. pylori (coloração especial Giemsa): negativa")
+    SendText ". A pesquisa de "
+    Send "^i"
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa."
 }
 
-
-
 :*:hpp:: {
-    InserirTextoRapido("`n. Pesquisa de H. pylori (coloração especial Giemsa): positiva")
+    SendText ". A pesquisa de "
+    Send "^i"
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou positiva."
+}
+
+:*:_sep:: {
+    SendText "------------------------------------------------------"
+}
+
+; =========================================================
+; ESTÔMAGO — PÓLIPOS E ADENOMAS
+; =========================================================
+:*:pgf:: {
+    Send "^b"
+    SendText "- Pólipo de glândulas fúndicas."
+    Send "^b"
+    SendText "`n. Mucosa gástrica oxíntica sem atipias, exibindo glândulas cisticamente dilatadas, revestidas por células parietais e principais.`n. Lâmina própria com infiltrado mononuclear.`n. A pesquisa de "
+    Send "^i"
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa.`n. Ausência de evidências de malignidade nesta amostra."
+}
+
+:*:estomagohiperplasico:: {
+    Send "^b"
+    SendText "- Pólipo hiperplásico."
+    Send "^b"
+    SendText "`n. Mucosa glandular de tipo gástrico, constituída por glândulas dilatadas junto à superfície, sem atipias celulares.`n. Lâmina própria com infiltrado mononuclear.`n. A pesquisa de "
+    Send "^i"
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa.`n. Ausência de evidências de malignidade nesta amostra."
+}
+
+:*:phip:: {
+    Send "^b"
+    SendText "- Pólipo hiperplásico."
+    Send "^b"
+    SendText "`n"
+    Send "^b"
+    SendText "- Não foram observados sinais de malignidade nesta amostra."
+    Send "^b"
+}
+
+:*:atbdbg:: {
+    Send "^b"
+    SendText "- Adenoma tubular com displasia de baixo grau."
+    Send "^b"
+    SendText "`n"
+    Send "^b"
+    SendText "- Categoria III do Consenso de Viena."
+    Send "^b"
+    SendText "`n"
+    Send "^b"
+    SendText "- Não foram observados sinais de invasão do córion ou malignidade nesta amostra."
+    Send "^b"
+}
+
+:*:atbdag:: {
+    Send "^b"
+    SendText "- Adenoma tubular com displasia de alto grau."
+    Send "^b"
+    SendText "`n"
+    Send "^b"
+    SendText "- Categoria IV do Consenso de Viena."
+    Send "^b"
+    SendText "`n"
+    Send "^b"
+    SendText "- Não foram observados sinais de invasão do córion ou malignidade nesta amostra."
+    Send "^b"
+}
+
+; =========================================================
+; OLGA / OLGIM
+; =========================================================
+:*:@olga:: {
+    OlgaOlgim_Show()
+}
+
+OlgaOlgim_Show() {
+    prevWin := WinGetID("A")
+
+    g := Gui("+AlwaysOnTop +MinSize", "OLGA / OLGIM")
+    g.MarginX := 14, g.MarginY := 12
+    g.SetFont("s10", "Segoe UI")
+
+    g.SetFont("s10 Bold", "Segoe UI")
+    g.AddText("xm w340", "Atrofia")
+    g.SetFont("s10", "Segoe UI")
+    g.AddText("xm y+8 w140", "Corpo")
+    ddlAtCorpo := g.AddDropDownList("x+8 w180 Choose1", ["ausente", "leve", "moderada", "acentuada"])
+    g.AddText("xm y+8 w140", "Antro")
+    ddlAtAntro := g.AddDropDownList("x+8 w180 Choose1", ["ausente", "leve", "moderada", "acentuada"])
+
+    g.SetFont("s10 Bold", "Segoe UI")
+    g.AddText("xm y+14 w340", "Metaplasia intestinal")
+    g.SetFont("s10", "Segoe UI")
+    g.AddText("xm y+8 w140", "Corpo")
+    ddlMICorpo := g.AddDropDownList("x+8 w180 Choose1", ["ausente", "leve", "moderada", "acentuada"])
+    g.AddText("xm y+8 w140", "Antro")
+    ddlMIAntro := g.AddDropDownList("x+8 w180 Choose1", ["ausente", "leve", "moderada", "acentuada"])
+
+    g.AddButton("xm y+16 w120 Default", "OK").OnEvent("Click", OnOK)
+    g.AddButton("x+8 w120", "Cancelar").OnEvent("Click", (*) => g.Destroy())
+    g.OnEvent("Escape", (*) => g.Destroy())
+    g.Show()
+
+    OnOK(*) {
+        atCorpo := ddlAtCorpo.Value - 1
+        atAntro := ddlAtAntro.Value - 1
+        miCorpo := ddlMICorpo.Value - 1
+        miAntro := ddlMIAntro.Value - 1
+
+        olga  := OlgaToRoman(OlgaCalcStage(atCorpo, atAntro))
+        olgim := OlgaToRoman(OlgaCalcStage(miCorpo, miAntro))
+        exp   := OlgaBuildExplicacao(atCorpo, atAntro, miCorpo, miAntro)
+
+        output := "Nota: Olga " olga " e Olgim " olgim " (" exp ")"
+
+        g.Destroy()
+        try WinActivate("ahk_id " prevWin)
+        try WinWaitActive("ahk_id " prevWin, , 1)
+        SendText output
+    }
+}
+
+OlgaCalcStage(corpus, antrum) {
+    static tbl := [[0,1,2,2],[1,1,2,3],[2,2,3,4],[3,3,4,4]]
+    return tbl[antrum+1][corpus+1]
+}
+
+OlgaToRoman(n) {
+    static r := ["0", "I", "II", "III", "IV"]
+    return r[n+1]
+}
+
+OlgaBuildExplicacao(atCorpo, atAntro, miCorpo, miAntro) {
+    grades := ["ausente", "leve", "moderada", "acentuada"]
+
+    if (atCorpo = 0 && atAntro = 0 && miCorpo = 0 && miAntro = 0)
+        return "atrofia e metaplasia intestinal ausentes em corpo e antro"
+
+    if (atCorpo = atAntro)
+        atDesc := "atrofia " grades[atCorpo+1] " em corpo e antro"
+    else
+        atDesc := "atrofia " grades[atCorpo+1] " em corpo e " grades[atAntro+1] " em antro"
+
+    if (miCorpo = miAntro)
+        miDesc := "metaplasia intestinal " grades[miCorpo+1] " em corpo e antro"
+    else
+        miDesc := "metaplasia intestinal " grades[miCorpo+1] " em corpo e " grades[miAntro+1] " em antro"
+
+    return atDesc ", " miDesc
 }

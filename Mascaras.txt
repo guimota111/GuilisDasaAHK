@@ -1,0 +1,55 @@
+ATALHOS PARA ADICIONAR
+pgf{
+- Pólipo de glândulas fúndicas.
+. Mucosa gástrica oxíntica sem atipias, exibindo glândulas cisticamente dilatadas, revestidas por células parietais e principais.
+. Lâmina própria com infiltrado mononuclear.
+. A pesquisa de Helicobacter pylori (Giemsa) resultou negativa.
+. Ausência de evidências de malignidade.
+}
+
+estomagohiperplasico{
+- Pólipo hiperplásico.
+. Mucosa glandular de tipo gástrico, constituída por glândulas dilatadas junto à superfície, sem atipias celulares.
+. Lâmina própria com infiltrado mononuclear.
+. A pesquisa de Helicobacter pylori (Giemsa) resultou negativa.
+. Ausência de evidências de malignidade.
+}
+
+phip{
+- Pólipo hiperplásico.
+- Não foram observados sinais de malignidade nesta amostra.
+}
+
+atbdbg{
+- Adenoma tubular com displasia de baixo grau.
+- Categoria III do Consenso de Viena.
+- Não foram observados sinais de invasão do córion ou malignidade nesta amostra.
+}
+
+atbdag{
+- Adenoma tubular com displasia de alto grau.
+- Categoria IV do Consenso de Viena.
+- Não foram observados sinais de invasão do córion ou malignidade nesta amostra.
+}
+
+
+MASCARAS PARA ADICIONAR
+Vesícula biliar colecistite{
+- Colecistite crônica calculosa. (negrito) (palavra calculosa é opcional)
+. Colesterolose. (opcional)
+. Presença de focos de metaplasia intestinal e pseudopilórica. (cada metaplasia é opcional tambem, se nenhuma marcada, tirar a linha)
+. Seios de Rokitanski-Aschoff dilatados. (opcional)
+. Ausência de neoplasia.
+. Presença de adenomiomatose. (opcional)
+- Linfonodo peri-cístico com hiperplasia linfoide reacional. (negrito) (opcional)
+- Rima de tecido hepático aderido com artefatos pré-analíticos de fulguração, discreto infiltrado inflamatório linfocitário periportal e esteatose discreta. (negrito) (opcional)
+}
+
+Vesícula biliar agudizada{
+- Colecistite crônica agudizada. (negrito)
+. Mucosa revestida por epitélio colunar simples, sem atipias, com focos de exulceração, área de necrose e infiltrado neutrofílico.
+. Lâmina própria e parede muscular com fibrose, focos de hemorragia e infiltrado inflamatório linfohistioplasmocitário.
+. Seios de Rokitanski-Aschoff dilatados. (opcional)
+. Ausência de neoplasia.
+- Colelitíase. (negrito)
+}
