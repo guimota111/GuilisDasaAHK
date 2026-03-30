@@ -13,37 +13,24 @@ TraySetIcon(A_ScriptDir "\Icones\Logo.ico")
 #Include scripts\GastroGUI.ahk
 #Include scripts\Gestor.ahk
 
-; --- Máscaras Gástricas ---
-#Include scripts\MucosaGastricaNormal.ahk
-#Include scripts\GastriteInativa.ahk
-#Include scripts\GastriteAtiva.ahk
-
-; --- Vesícula Biliar ---
-#Include scripts\VesiculaBiliarColecistite.ahk
-#Include scripts\VesiculaBiliarAgudizada.ahk
+; --- Estômago ---
+#Include scripts\EstomagoNormalBiopsia.ahk
 
 ; --- Cólon ---
-#Include scripts\AdenocarcinomaColonPeca.ahk
+#Include scripts\ColonNormal.ahk
 
 ; =========================================================
 ; MENU
 ; =========================================================
 Estomago := Menu()
-Estomago.Add("&1 Mucosa Normal",    (*) => Mask_MucosaGastricaNormal())
-Estomago.Add("&2 Gastrite Inativa", (*) => Mask_GastriteInativa())
-Estomago.Add("&3 Gastrite Ativa",   (*) => Mask_GastriteAtiva())
-
-VesiculaBiliar := Menu()
-VesiculaBiliar.Add("&1 Colecistite Crônica", (*) => Mask_VesiculaBiliarColecistite())
-VesiculaBiliar.Add("&2 Agudizada",           (*) => Mask_VesiculaBiliarAgudizada())
+Estomago.Add("&1 Mucosa Normal", (*) => Mask_EstomagoNormalBiopsia())
 
 Colon := Menu()
-Colon.Add("&1 Adenocarcinoma (Peça)", (*) => Mask_AdenocarcinomaColonPeca())
+Colon.Add("&1 Cólon Normal", (*) => Mask_ColonNormal())
 
 Gastro := Menu()
-Gastro.Add("&1 Estômago",       Estomago)
-Gastro.Add("&2 Vesícula Biliar", VesiculaBiliar)
-Gastro.Add("&3 Cólon",          Colon)
+Gastro.Add("&1 Estômago", Estomago)
+Gastro.Add("&2 Cólon",    Colon)
 
 Residentes := Menu()
 Staffs     := Menu()
