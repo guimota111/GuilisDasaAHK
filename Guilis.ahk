@@ -22,6 +22,9 @@ TraySetIcon(A_ScriptDir "\Icones\Logo.ico")
 #Include scripts\VesiculaBiliarColecistite.ahk
 #Include scripts\VesiculaBiliarAgudizada.ahk
 
+; --- Cólon ---
+#Include scripts\AdenocarcinomaColonPeca.ahk
+
 ; =========================================================
 ; MENU
 ; =========================================================
@@ -34,9 +37,13 @@ VesiculaBiliar := Menu()
 VesiculaBiliar.Add("&1 Colecistite Crônica", (*) => Mask_VesiculaBiliarColecistite())
 VesiculaBiliar.Add("&2 Agudizada",           (*) => Mask_VesiculaBiliarAgudizada())
 
+Colon := Menu()
+Colon.Add("&1 Adenocarcinoma (Peça)", (*) => Mask_AdenocarcinomaColonPeca())
+
 Gastro := Menu()
 Gastro.Add("&1 Estômago",       Estomago)
 Gastro.Add("&2 Vesícula Biliar", VesiculaBiliar)
+Gastro.Add("&3 Cólon",          Colon)
 
 Residentes := Menu()
 Staffs     := Menu()

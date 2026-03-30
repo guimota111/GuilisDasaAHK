@@ -42,5 +42,10 @@ GastroGUI_Show() {
     g.Add("Button", "xm y+6 w" bw, "Colecistite Crônica" ).OnEvent("Click", (*) => (g.Destroy(), Mask_VesiculaBiliarColecistite()))
     g.Add("Button", "x+8 w"   bw, "Agudizada"            ).OnEvent("Click", (*) => (g.Destroy(), Mask_VesiculaBiliarAgudizada()))
 
+    ; ------- CÓLON -------
+    AddSection("Cólon")
+    g.SetFont("s10", "Segoe UI")
+    g.Add("Button", "xm y+6 w" bw, "Adenocarcinoma (Peça)").OnEvent("Click", (*) => (g.Destroy(), Mask_AdenocarcinomaColonPeca()))
+
     g.Show("w" sw + 28)
 }
