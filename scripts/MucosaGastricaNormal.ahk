@@ -10,10 +10,11 @@ Mask_MucosaGastricaNormal() {
     g.SetFont("s10", "Segoe UI")
 
     g.AddText("xm w180", "Localização da mucosa")
-    ddlLocal := g.AddDropDownList("x+8 w200 Choose1", ["corpo", "antro", "corpo e antro"])
+    ddlLocal := g.AddDropDownList("x+8 w200 Choose1", ["corpo", "antro", "corpo e antro", "antro e incisura", "corpo, antro e incisura"])
 
-    g.AddText("xm y+12 w180", "H. pylori (Giemsa)")
-    ddlHP := g.AddDropDownList("x+8 w200 Choose1", ["negativa", "positiva"])
+    g.AddText("xm y+12 w100", "H. pylori")
+    chkGiemsa := g.AddCheckbox("x+6 w110 Checked", "(Giemsa)")
+    ddlHP := g.AddDropDownList("x+8 w200 Choose1", ["negativa", "positiva (+/3+)", "positiva (2+/3+)", "positiva (3+/3+)"])
 
     g.AddButton("xm y+18 w120 Default", "OK").OnEvent("Click", OnOK)
     g.AddButton("x+8 w120", "Cancelar").OnEvent("Click", (*) => g.Destroy())
@@ -21,8 +22,9 @@ Mask_MucosaGastricaNormal() {
     g.Show()
 
     OnOK(*) {
-        loc := ddlLocal.Text
-        hp  := ddlHP.Text
+        loc      := ddlLocal.Text
+        hp       := ddlHP.Text
+        hpSufixo := chkGiemsa.Value ? " (Giemsa)" : ""
 
         g.Destroy()
         try WinActivate("ahk_id " prevWin)
@@ -34,6 +36,6 @@ Mask_MucosaGastricaNormal() {
         Send "^i"
         SendText "Helicobacter pylori"
         Send "^i"
-        SendText " (Giemsa) resultou " hp ".`n. Ausência de evidências de malignidade nesta amostra."
+        SendText hpSufixo " resultou " hp ".`n. Ausência de evidências de malignidade nesta amostra."
     }
 }

@@ -32,9 +32,21 @@ GastroGUI_Show() {
     ; ------- ESTÔMAGO -------
     AddSection("Estômago")
     g.SetFont("s10", "Segoe UI")
-    g.Add("Button", "xm y+6 w" bw, "Mucosa Normal"  ).OnEvent("Click", (*) => (g.Destroy(), Mask_MucosaGastricaNormal()))
-    g.Add("Button", "x+8 w"   bw, "Gastrite Inativa" ).OnEvent("Click", (*) => (g.Destroy(), Mask_GastriteInativa()))
-    g.Add("Button", "xm y+6 w" bw, "Gastrite Ativa"  ).OnEvent("Click", (*) => (g.Destroy(), Mask_GastriteAtiva()))
+    g.Add("Button", "xm y+6 w" bw, "Mucosa Normal"         ).OnEvent("Click", (*) => (g.Destroy(), Mask_MucosaGastricaNormal()))
+    g.Add("Button", "x+8 w"   bw, "Gastrite Inativa"        ).OnEvent("Click", (*) => (g.Destroy(), Mask_GastriteInativa()))
+    g.Add("Button", "xm y+6 w" bw, "Gastrite Ativa"         ).OnEvent("Click", (*) => (g.Destroy(), Mask_GastriteAtiva()))
+    g.Add("Button", "x+8 w"   bw, "Borda de Úlcera Hp+"    ).OnEvent("Click", (*) => (g.Destroy(), Mask_BordaUlceraHpPositivo()))
+    g.Add("Button", "xm y+6 w" bw, "Borda de Úlcera Hp-"   ).OnEvent("Click", (*) => (g.Destroy(), Mask_BordaUlceraHpNegativo()))
+    g.Add("Button", "xm y+6 w" bw, "Gastropatia Reativa"    ).OnEvent("Click", (*) => (g.Destroy(), Mask_GastropReativa()))
+    g.Add("Button", "xm y+6 w" bw, "Alt. Reativas Discretas").OnEvent("Click", (*) => (g.Destroy(), Mask_AltReativaDisc()))
+
+    ; ------- DUODENO -------
+    AddSection("Duodeno")
+    g.SetFont("s10", "Segoe UI")
+    g.Add("Button", "xm y+6 w" bw, "Duodeno Normal" ).OnEvent("Click", (*) => (g.Destroy(), Mask_DuodenoNormal()))
+    g.Add("Button", "x+8 w"   bw, "Duodenite Leve" ).OnEvent("Click", (*) => (g.Destroy(), Mask_DuodenoLeve()))
+    g.Add("Button", "xm y+6 w" bw, "Heterotopia"         ).OnEvent("Click", (*) => (g.Destroy(), Mask_DuodenoHeterotopia()))
+    g.Add("Button", "x+8 w"   bw, "Hiperplasia Brunner" ).OnEvent("Click", (*) => (g.Destroy(), Mask_DuodenoHiperplasiaBrunner()))
 
     ; ------- VESÍCULA BILIAR -------
     AddSection("Vesícula Biliar")
@@ -46,6 +58,14 @@ GastroGUI_Show() {
     AddSection("Cólon")
     g.SetFont("s10", "Segoe UI")
     g.Add("Button", "xm y+6 w" bw, "Adenocarcinoma (Peça)").OnEvent("Click", (*) => (g.Destroy(), Mask_AdenocarcinomaColonPeca()))
+    g.Add("Button", "x+8 w"   bw, "Colite Ativa Focal"        ).OnEvent("Click", (*) => (g.Destroy(), Mask_ColonColiteAtivaFocal()))
+    g.Add("Button", "xm y+6 w" bw, "Pólipo Hiperpl./Inflam." ).OnEvent("Click", (*) => (g.Destroy(), Mask_ColonPolipoHiperplasicoInflamatorio()))
+
+    ; ------- IHQ -------
+    AddSection("IHQ")
+    g.SetFont("s10", "Segoe UI")
+    g.Add("Button", "xm y+6 w" bw, "pMMR + HER2 neg (Biópsia)").OnEvent("Click", (*) => (g.Destroy(), Mask_IHQEstomago_pMMR_HER2neg()))
+    g.Add("Button", "x+8 w"   bw, "pMMR + HER2 neg (Peça)"   ).OnEvent("Click", (*) => (g.Destroy(), Mask_IHQEstomago_pMMR_HER2neg_Peca()))
 
     g.Show("w" sw + 28)
 }

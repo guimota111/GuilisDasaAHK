@@ -1,0 +1,36 @@
+ATALHOS — SISTEMA GUILIS
+========================
+
+DATA
+  datahoje              → Data atual (dd/MM/yyyy)
+
+GERAIS
+  dlhn                  → "dentro dos limites histológicos da normalidade"
+  mg0                   → "Livre de neoplasia"
+  mgdlhn                → "Livre de neoplasia, dentro dos limites histológicos da normalidade"
+  compneo               → "Comprometida pela neoplasia"
+  hpn                   → H. pylori (Giemsa) resultou negativa.
+  hpp                   → H. pylori (Giemsa) resultou positiva.
+  _sep                  → Linha separadora (------)
+
+BIÓPSIAS GÁSTRICAS
+  bpcorpoeantro         → "Biópsia gástrica (corpo e antro):"
+  bpcp                  → "Biópsia gástrica (corpo):"
+  bpan                  → "Biópsia gástrica (antro):"
+  bpai                  → "Biópsia gástrica (antro e incisura):"
+
+ESTÔMAGO — PÓLIPOS E ADENOMAS
+  pgf                   → Pólipo de glândulas fúndicas (laudo completo)
+  estomagohiperplasico  → Pólipo hiperplásico (laudo completo)
+  phip                  → Pólipo hiperplásico (curto)
+  atbdbg                → Adenoma tubular com displasia de baixo grau
+  atbdag                → Adenoma tubular com displasia de alto grau
+
+OUTROS
+  @apendicite           → Laudo de apendicite aguda
+  @olga                 → Abre calculadora OLGA / OLGIM
+
+========================
+Ctrl+K  = Menu principal
+Ctrl+L  = Menu GUI
+F5      = Recarregar script

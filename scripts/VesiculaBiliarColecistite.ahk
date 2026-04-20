@@ -36,28 +36,32 @@ Mask_VesiculaBiliarColecistite() {
     g.Show()
 
     OnOK(*) {
-        titulo := cbCalculosa.Value ? "- Colecistite crônica calculosa." : "- Colecistite crônica."
+        titulo      := cbCalculosa.Value   ? "- Colecistite crônica calculosa." : "- Colecistite crônica."
+        vColest     := cbColesterolose.Value
+        vMetInt     := cbMetInt.Value
+        vMetPseudo  := cbMetPseudo.Value
+        vSeios      := cbSeios.Value
+        vAdenomio   := cbAdenomio.Value
+        vLinfonodo  := cbLinfonodo.Value
+        vHepatico   := cbHepatico.Value
 
         linhasReg := ""
-        if cbColesterolose.Value
+        if vColest
             linhasReg .= "`n. Colesterolose."
 
-        ; Metaplasia intestinal e/ou pseudopilórica
-        metInt    := cbMetInt.Value
-        metPseudo := cbMetPseudo.Value
-        if (metInt && metPseudo)
+        if (vMetInt && vMetPseudo)
             linhasReg .= "`n. Presença de focos de metaplasia intestinal e pseudopilórica."
-        else if metInt
+        else if vMetInt
             linhasReg .= "`n. Presença de focos de metaplasia intestinal."
-        else if metPseudo
+        else if vMetPseudo
             linhasReg .= "`n. Presença de focos de metaplasia pseudopilórica."
 
-        if cbSeios.Value
+        if vSeios
             linhasReg .= "`n. Seios de Rokitanski-Aschoff dilatados."
 
         linhasReg .= "`n. Ausência de neoplasia."
 
-        if cbAdenomio.Value
+        if vAdenomio
             linhasReg .= "`n. Presença de adenomiomatose."
 
         g.Destroy()
@@ -71,7 +75,7 @@ Mask_VesiculaBiliarColecistite() {
         SendText linhasReg
 
         ; Linha do linfonodo (negrito)
-        if cbLinfonodo.Value {
+        if vLinfonodo {
             SendText "`n"
             Send "^b"
             SendText "- Linfonodo peri-cístico com hiperplasia linfoide reacional."
@@ -79,7 +83,7 @@ Mask_VesiculaBiliarColecistite() {
         }
 
         ; Linha do tecido hepático (negrito)
-        if cbHepatico.Value {
+        if vHepatico {
             SendText "`n"
             Send "^b"
             SendText "- Rima de tecido hepático aderido com artefatos pré-analíticos de fulguração, discreto infiltrado inflamatório linfocitário periportal e esteatose discreta."

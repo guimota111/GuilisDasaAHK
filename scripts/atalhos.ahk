@@ -5,6 +5,7 @@ InserirTextoRapido(texto) {
     SendText texto
 }
 
+
 ; Insere uma linha em negrito seguida de texto normal
 InserirBoldResto(bold, resto) {
     Send "^b"
@@ -14,50 +15,15 @@ InserirBoldResto(bold, resto) {
 }
 
 ; =========================================================
-; ATALHOS DE DATA
-; =========================================================
-:*:datahoje:: {
-    SendText FormatTime(, "dd/MM/yyyy")
-}
-
-; =========================================================
 ; ATALHOS GERAIS
 ; =========================================================
-:*:dlhn:: {
-    SendText "dentro dos limites histológicos da normalidade"
+:*:notacortes:: {
+    Send "^b"
+    SendText "Nota:"
+    Send "^b"
+    SendText " foram avaliados cortes histológicos aprofundados."
 }
 
-:*:mg0:: {
-    SendText "Livre de neoplasia"
-}
-
-:*:mgdlhn:: {
-    SendText "Livre de neoplasia, dentro dos limites histológicos da normalidade"
-}
-
-:*:compneo:: {
-    SendText "Comprometida pela neoplasia"
-}
-
-:*:hpn:: {
-    SendText ". A pesquisa de "
-    Send "^i"
-    SendText "Helicobacter pylori"
-    Send "^i"
-    SendText " (Giemsa) resultou negativa."
-}
-
-:*:hpp:: {
-    SendText ". A pesquisa de "
-    Send "^i"
-    SendText "Helicobacter pylori"
-    Send "^i"
-    SendText " (Giemsa) resultou positiva."
-}
-
-:*:_sep:: {
-    SendText "------------------------------------------------------"
-}
 
 ; =========================================================
 ; ESTÔMAGO — PÓLIPOS E ADENOMAS
@@ -99,13 +65,11 @@ InserirBoldResto(bold, resto) {
     SendText "- Adenoma tubular com displasia de baixo grau."
     Send "^b"
     SendText "`n"
-    Send "^b"
     SendText "- Categoria III do Consenso de Viena."
-    Send "^b"
     SendText "`n"
-    Send "^b"
     SendText "- Não foram observados sinais de invasão do córion ou malignidade nesta amostra."
-    Send "^b"
+    SendText "`n"
+
 }
 
 :*:atbdag:: {
@@ -113,13 +77,223 @@ InserirBoldResto(bold, resto) {
     SendText "- Adenoma tubular com displasia de alto grau."
     Send "^b"
     SendText "`n"
-    Send "^b"
     SendText "- Categoria IV do Consenso de Viena."
+    SendText "`n"
+    SendText "- Não foram observados sinais de invasão do córion ou malignidade nesta amostra."
+    SendText "`n"
+
+}
+
+:*:corponormal:: {
+    Send "^b"
+    SendText "- Mucosa sem particularidades histológicas."
     Send "^b"
     SendText "`n"
+    SendText ". Mucosa de corpo com revestimento habitual, mantendo organização regular e maturação preservada."
+    SendText "`n"
+    SendText ". Atrofia: ausente."
+    SendText "`n"
+    SendText ". Metaplasia intestinal: ausente."
+    SendText "`n"
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa."
+    SendText "`n"
+    SendText ". Ausência de evidências de malignidade nesta amostra."
+    SendText "`n"
+    
+}
+
+:*:antronormal:: {
     Send "^b"
-    SendText "- Não foram observados sinais de invasão do córion ou malignidade nesta amostra."
+    SendText "- Mucosa sem particularidades histológicas."
     Send "^b"
+    SendText "`n"
+    SendText ". Mucosa de antro com revestimento habitual, mantendo organização regular e maturação preservada."
+    SendText "`n"
+    SendText ". Atrofia: ausente."
+    SendText "`n"
+    SendText ". Metaplasia intestinal: ausente."
+    SendText "`n"
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa."
+    SendText "`n"
+    SendText ". Ausência de evidências de malignidade nesta amostra."
+    SendText "`n"
+    
+}
+
+:*:cpannormal:: {
+    Send "^b"
+    SendText "- Mucosa sem particularidades histológicas."
+    Send "^b"
+    SendText "`n"
+    SendText ". Mucosa de corpo e antro com revestimento habitual, mantendo organização regular e maturação preservada."
+    SendText "`n"
+    SendText ". Atrofia: ausente."
+    SendText "`n"
+    SendText ". Metaplasia intestinal: ausente."
+    SendText "`n"
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa."
+    SendText "`n"
+    SendText ". Ausência de evidências de malignidade nesta amostra."
+    SendText "`n"
+    
+}
+
+:*:gclsemnadaa:: {
+    Send "^b"
+    SendText "- Gastrite crônica leve e inativa."
+    Send "^b"
+    SendText "`n"
+    SendText ". Mucosa de antro com revestimento habitual, mantendo organização regular e maturação preservada."
+    SendText "`n"
+    SendText ". Lâmina própria exibindo leve infiltrado mononuclear, sem atividade neutrofílica."
+    SendText "`n"
+    SendText ". Atrofia: ausente."
+    SendText "`n"
+    SendText ". Metaplasia intestinal: ausente."
+    SendText "`n"
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa."
+    SendText "`n"
+    SendText ". Ausência de evidências de malignidade nesta amostra."
+    SendText "`n"
+    
+}
+
+:*:gclsemnadac:: {
+    Send "^b"
+    SendText "- Gastrite crônica leve e inativa."
+    Send "^b"
+    SendText "`n"
+    SendText ". Mucosa de antro com revestimento habitual, mantendo organização regular e maturação preservada."
+    SendText "`n"
+    SendText ". Lâmina própria exibindo leve infiltrado mononuclear, sem atividade neutrofílica."
+    SendText "`n"
+    SendText ". Atrofia: ausente."
+    SendText "`n"
+    SendText ". Metaplasia intestinal: ausente."
+    SendText "`n"
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa."
+    SendText "`n"
+    SendText ". Ausência de evidências de malignidade nesta amostra."
+    SendText "`n"
+    
+}
+
+:*:bpcorpoeantro:: {
+    SendText "Biópsia gástrica (corpo e antro):"
+
+}
+
+:*:bpcp:: {
+    SendText "Biópsia gástrica (corpo):"
+
+}
+:*:bpan:: {
+    SendText "Biópsia gástrica (antro):"
+
+}
+:*:bpai:: {
+    SendText "Biópsia gástrica (antro e incisura):"
+
+}
+:*:@smal:: {
+    SendText ". Ausência de evidências de malignidade nesta amostra."
+
+}
+:*:@hp0::{
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou negativa."
+    SendText "`n"
+}
+
+:*:@hp1::{
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou positiva (1+/3+)."
+    SendText "`n"
+}
+
+:*:@hp2::{
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou positiva (2+/3+)."
+    SendText "`n"
+}
+
+:*:@hp3::{
+    SendText ". A pesquisa de "
+    Send "^i" 
+    SendText "Helicobacter pylori"
+    Send "^i"
+    SendText " (Giemsa) resultou positiva (3+/3+)."
+    SendText "`n"
+}
+:*:@apendicite:: {
+    Send "^b"
+    SendText "Apêndice cecal:`n- Apendicite aguda úlcero-flegmonosa.`n- Periapendicite aguda fibrinoleucocitária.`n"
+    Send "^b"
+    SendText "- Não se observam elementos de malignidade.`n"
+}
+
+:*:notahpihq::{
+    SendText "Nota: Sugere-se  pesquisar H. pylori através do estudo imuno-histoquímico (método mais sensível e mais específico) devido a atividade inflamatória com pesquisa negativa pela coloração especial (Giemsa)."
+}
+; =========================================================
+; DUODENO
+; =========================================================
+:*:duodn:: {
+    Mask_DuodenoNormal()
+}
+:*:duodeniteleve:: {
+Send "^b"
+SendText "- Duodenite leve com focos de metaplasia foveolar."
+Send "^b"
+SendText ". Mucosa apresentando leve edema, congestão vascular e infiltrado inflamatório misto leve."
+SendText ". Linfócitos intraepiteliais em contagem não significante."
+SendText ". Revestimento epitelial aparece ligeiramente reativo, mantendo organização regular, sem atrofia de vilos."
+SendText ". Ausência de granulomas, eosinofilia ou parasitas."
+SendText ". Não foram observados sinais de malignidade nesta amostra."
+
+}
+
+; =========================================================
+; ALTERAÇÕES REATIVAS DISCRETAS
+; =========================================================
+:*:estomagoreativo:: {
+    Mask_AltReativaDisc()
+}
+
+; =========================================================
+; GASTROPATIA REATIVA
+; =========================================================
+:*:gastropatiareativa:: {
+    Mask_GastropReativa()
 }
 
 ; =========================================================
@@ -167,7 +341,7 @@ OlgaOlgim_Show() {
         olgim := OlgaToRoman(OlgaCalcStage(miCorpo, miAntro))
         exp   := OlgaBuildExplicacao(atCorpo, atAntro, miCorpo, miAntro)
 
-        output := "Nota: Olga " olga " e Olgim " olgim " (" exp ")"
+        output := "Nota: OLGA " olga " e OLGIM " olgim " (" exp ")"
 
         g.Destroy()
         try WinActivate("ahk_id " prevWin)
@@ -204,3 +378,4 @@ OlgaBuildExplicacao(atCorpo, atAntro, miCorpo, miAntro) {
 
     return atDesc ", " miDesc
 }
+
