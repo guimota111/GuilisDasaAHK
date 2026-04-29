@@ -203,6 +203,16 @@ InserirBoldResto(bold, resto) {
 
 }
 
+:*:@frags:: {
+    SendText "Fragmentos representativos foram enviados para exame histológico"
+
+}
+
+:*:@ti:: {
+    SendText "Todo o espécime foi submetido a exame histológico"
+
+}
+
 :*:bpcp:: {
     SendText "Biópsia gástrica (corpo):"
 
